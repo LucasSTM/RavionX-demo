@@ -1,0 +1,768 @@
+/* ============================================================
+   PIXEL RPG LEARNING GAME — style.css
+   Font: "Press Start 2P" (loaded via Google Fonts in index.html)
+   ============================================================ */
+
+/* ── CSS Custom Properties ── */
+:root {
+  --c1:         #1a1a2e;   /* darkest bg */
+  --c2:         #16213e;   /* panel bg   */
+  --c3:         #0f3460;   /* accent bg  */
+  --gold:       #e2b96f;
+  --green:      #4caf7d;
+  --red:        #e05252;
+  --blue:       #5b8dd9;
+  --purple:     #9b59b6;
+  --white:      #f0e6d3;
+  --btn-bg:     #2d2d5e;
+  --btn-border: #5b5bbb;
+}
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ── */
+body {
+  background: #0a0a14;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px 12px;
+}
+
+/* ============================================================
+   GAME CONTAINER
+   ============================================================ */
+#game {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  color: var(--white);
+  background: var(--c1);
+  border: 3px solid var(--gold);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  min-height: 580px;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+
+/* ============================================================
+   SCREENS — only .active is shown
+   ============================================================ */
+.screen {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+#topbar {
+  background: var(--c2);
+  border-bottom: 2px solid var(--gold);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 90px;
+}
+
+.bar-label {
+  font-size: 6px;
+  color: var(--gold);
+}
+
+.bar-outer {
+  height: 8px;
+  background: #111;
+  border: 1px solid #555;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 90px;
+}
+
+.bar-inner {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+#hp-bar  { background: var(--red); }
+#xp-bar  { background: var(--blue); }
+#mp-bar  { background: var(--purple); }
+
+.level-badge {
+  background: var(--gold);
+  color: var(--c1);
+  padding: 4px 7px;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   WORLD MAP SCREEN
+   ============================================================ */
+#world {
+  background: #0a0f1e;
+}
+
+.world-title {
+  text-align: center;
+  padding: 14px 8px 6px;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.world-subtitle {
+  text-align: center;
+  font-size: 6px;
+  color: #8888bb;
+  padding-bottom: 10px;
+}
+
+.zone-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px 14px;
+  flex: 1;
+}
+
+.zone {
+  background: var(--c2);
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 14px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.15s;
+  position: relative;
+}
+
+.zone:hover {
+  border-color: var(--gold);
+}
+
+.zone.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.zone-icon {
+  font-size: 28px;
+  image-rendering: pixelated;
+}
+
+.zone-name {
+  font-size: 7px;
+  color: var(--gold);
+  text-align: center;
+}
+
+.zone-diff {
+  font-size: 5px;
+  color: #8888bb;
+}
+
+.zone-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 5px;
+  background: var(--green);
+  color: #000;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.world-footer {
+  padding: 8px 14px 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   BATTLE SCREEN
+   ============================================================ */
+#battle {
+  background: linear-gradient(#0a1020 60%, #0f1f30 100%);
+}
+
+.battle-scene {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 16px 24px 8px;
+  height: 130px;
+}
+
+.enemy-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sprite {
+  font-size: 40px;
+  text-align: center;
+  image-rendering: pixelated;
+  position: relative;
+}
+
+.sprite.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%,  100% { transform: translateX(0); }
+  20%        { transform: translateX(-6px); }
+  40%        { transform: translateX(6px); }
+  60%        { transform: translateX(-4px); }
+  80%        { transform: translateX(4px); }
+}
+
+.sprite-name {
+  font-size: 6px;
+  color: var(--gold);
+  margin-top: 4px;
+  text-align: center;
+}
+
+.enemy-hp-bar {
+  width: 80px;
+  height: 6px;
+  background: #111;
+  border: 1px solid #555;
+  border-radius: 1px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.enemy-hp-inner {
+  height: 100%;
+  width: 100%;
+  background: var(--red);
+  transition: width 0.4s ease;
+}
+
+/* Battle log */
+.battle-log {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #2a2a4a;
+  margin: 0 14px;
+  padding: 6px 10px;
+  font-size: 6px;
+  color: #aabbff;
+  min-height: 22px;
+  border-radius: 2px;
+  text-align: center;
+}
+
+/* Question box */
+.question-box {
+  background: var(--c2);
+  border: 2px solid var(--blue);
+  margin: 8px 14px;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.q-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.q-cat {
+  font-size: 5px;
+  color: var(--blue);
+}
+
+.q-diff {
+  font-size: 5px;
+}
+
+.q-text {
+  font-size: 8px;
+  color: var(--white);
+  line-height: 1.7;
+  text-align: center;
+  margin-bottom: 12px;
+  min-height: 30px;
+}
+
+/* MC / Type toggle */
+.q-type-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  justify-content: center;
+}
+
+.toggle-btn {
+  background: #111;
+  border: 1px solid #444;
+  color: #888;
+  padding: 3px 8px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toggle-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+/* Answer choices */
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.choice-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--white);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 8px 6px;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align: center;
+  transition: background 0.1s;
+  line-height: 1.4;
+}
+
+.choice-btn:hover {
+  background: #3a3a7e;
+}
+
+.choice-btn.correct {
+  background: #1a4a2a !important;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.choice-btn.wrong {
+  background: #4a1a1a !important;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* Type-answer input */
+.type-input-wrap {
+  display: flex;
+  gap: 6px;
+}
+
+.type-input {
+  flex: 1;
+  background: #111;
+  border: 1px solid #444;
+  color: var(--white);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 7px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.type-input:focus {
+  border-color: var(--blue);
+}
+
+/* Battle footer */
+.battle-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 14px 10px;
+}
+
+#combo-display {
+  font-size: 6px;
+  color: var(--gold);
+}
+
+/* ============================================================
+   SHARED PIXEL BUTTON
+   ============================================================ */
+.px-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--white);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  white-space: nowrap;
+  transition: background 0.1s;
+}
+
+.px-btn:hover {
+  background: #3a3a7e;
+}
+
+.px-btn.danger {
+  border-color: var(--red);
+}
+
+.px-btn.success {
+  border-color: var(--green);
+}
+
+.px-btn.gold {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ============================================================
+   INVENTORY SCREEN
+   ============================================================ */
+#inventory {
+  background: var(--c1);
+}
+
+.inv-title {
+  text-align: center;
+  padding: 14px 8px 6px;
+  color: var(--gold);
+  font-size: 10px;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 10px 12px;
+}
+
+.equip-slot {
+  background: var(--c2);
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.equip-slot.equipped {
+  border-color: var(--gold);
+}
+
+.equip-slot:hover {
+  border-color: #7777bb;
+}
+
+.equip-slot.locked {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slot-icon {
+  font-size: 22px;
+}
+
+.slot-name {
+  font-size: 5px;
+  color: var(--gold);
+  text-align: center;
+}
+
+.slot-stat {
+  font-size: 5px;
+  color: #8888bb;
+  text-align: center;
+}
+
+.slot-req {
+  font-size: 4px;
+  color: var(--red);
+  text-align: center;
+}
+
+.inv-stats {
+  background: var(--c2);
+  border: 1px solid #333;
+  margin: 0 12px 10px;
+  border-radius: 4px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+.inv-stat {
+  font-size: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inv-stat span:last-child {
+  color: var(--gold);
+}
+
+.inv-footer {
+  padding: 0 12px 10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================================
+   CUSTOM QUESTIONS SCREEN
+   ============================================================ */
+#custom {
+  background: var(--c1);
+}
+
+.cq-title {
+  text-align: center;
+  padding: 14px 8px 6px;
+  color: var(--gold);
+  font-size: 9px;
+}
+
+.cq-form {
+  background: var(--c2);
+  border: 1px solid #333;
+  margin: 8px 12px;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cq-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.cq-label {
+  font-size: 5px;
+  color: var(--gold);
+  white-space: nowrap;
+  min-width: 50px;
+}
+
+.cq-input,
+.cq-select {
+  flex: 1;
+  background: #111;
+  border: 1px solid #444;
+  color: var(--white);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 5px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.cq-input:focus,
+.cq-select:focus {
+  border-color: var(--blue);
+}
+
+.cq-list {
+  overflow-y: auto;
+  max-height: 160px;
+  margin: 0 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cq-item {
+  background: var(--c2);
+  border: 1px solid #333;
+  border-radius: 3px;
+  padding: 7px 9px;
+  font-size: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.cq-item-text {
+  color: #aab;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.cq-badge {
+  padding: 2px 5px;
+  border-radius: 2px;
+  font-size: 4px;
+  white-space: nowrap;
+}
+
+.badge-easy   { background: #1a3a1a; color: var(--green); }
+.badge-medium { background: #3a2a0a; color: var(--gold); }
+.badge-hard   { background: #3a1a1a; color: var(--red); }
+
+/* ============================================================
+   LEVEL UP SCREEN
+   ============================================================ */
+.levelup-screen {
+  background: #0a0a18;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.lu-star {
+  font-size: 48px;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+.lu-title {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 3px;
+}
+
+.lu-msg {
+  font-size: 7px;
+  color: #aabbff;
+  line-height: 2;
+}
+
+.lu-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.lu-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.lu-stat-label {
+  font-size: 5px;
+  color: #8888bb;
+}
+
+.lu-stat-val {
+  font-size: 10px;
+  color: var(--green);
+}
+
+/* ============================================================
+   BOTTOM NAVIGATION
+   ============================================================ */
+.nav-bar {
+  background: var(--c2);
+  border-top: 2px solid var(--gold);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0 6px;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.15s;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: 'Press Start 2P', monospace;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+  opacity: 1;
+}
+
+.nav-icon {
+  font-size: 16px;
+}
+
+.nav-label {
+  font-size: 5px;
+  color: var(--gold);
+}
+
+/* ============================================================
+   ANIMATIONS / UTILITIES
+   ============================================================ */
+.flash {
+  animation: flash 0.3s ease;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* Scrollbar styling for the custom list */
+.cq-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cq-list::-webkit-scrollbar-track {
+  background: #111;
+}
+
+.cq-list::-webkit-scrollbar-thumb {
+  background: var(--btn-border);
+  border-radius: 2px;
+}
