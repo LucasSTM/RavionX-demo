@@ -1,197 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pixel RPG Learning Game</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div id="game">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixel RPG Learning Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="game">
+      <!-- TOP BAR -->
+      <div id="topbar">
+        <div class="stat-group">
+          <div class="bar-wrap">
+            <div class="bar-label">HP</div>
+            <div class="bar-outer">
+              <div class="bar-inner" id="hp-bar" style="width: 100%"></div>
+            </div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-label">MP</div>
+            <div class="bar-outer">
+              <div class="bar-inner" id="mp-bar" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
 
-    <!-- TOP BAR -->
-    <div id="topbar">
-      <div class="stat-group">
+        <!-- Nút chuyển ngôn ngữ -->
+        <div class="lang-selector">
+          <button class="lang-btn" onclick="changeLanguage('vi')">VN</button>
+          <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+        </div>
+
+        <div class="level-badge" id="lv-badge">LV 1</div>
         <div class="bar-wrap">
-          <div class="bar-label">HP</div>
-          <div class="bar-outer"><div class="bar-inner" id="hp-bar" style="width:100%"></div></div>
-        </div>
-        <div class="bar-wrap">
-          <div class="bar-label">MP</div>
-          <div class="bar-outer"><div class="bar-inner" id="mp-bar" style="width:80%"></div></div>
-        </div>
-      </div>
-      <div class="level-badge" id="lv-badge">LV 1</div>
-      <div class="bar-wrap">
-        <div class="bar-label">XP</div>
-        <div class="bar-outer"><div class="bar-inner" id="xp-bar" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <!-- SCREEN: WORLD MAP -->
-    <div id="world" class="screen active">
-      <div class="world-title">⚔ QUEST MAP</div>
-      <div class="world-subtitle">choose your zone — answer to fight</div>
-      <div class="zone-grid">
-        <div class="zone" onclick="startBattle('math')">
-          <div class="zone-badge">FREE</div>
-          <div class="zone-icon">🔢</div>
-          <div class="zone-name">Math Realm</div>
-          <div class="zone-diff">Easy → Hard</div>
-        </div>
-        <div class="zone" onclick="startBattle('english')">
-          <div class="zone-badge">FREE</div>
-          <div class="zone-icon">📖</div>
-          <div class="zone-name">Word Dungeon</div>
-          <div class="zone-diff">Easy → Hard</div>
-        </div>
-        <div class="zone" onclick="startBattle('science')">
-          <div class="zone-badge">LV3+</div>
-          <div class="zone-icon">🔬</div>
-          <div class="zone-name">Science Lab</div>
-          <div class="zone-diff">Medium → Boss</div>
-        </div>
-        <div class="zone" onclick="startBattle('custom')">
-          <div class="zone-badge">CUSTOM</div>
-          <div class="zone-icon">✏️</div>
-          <div class="zone-name">My Questions</div>
-          <div class="zone-diff">Your difficulty</div>
-        </div>
-      </div>
-      <div class="world-footer">
-        <button class="px-btn gold" onclick="showScreen('inventory')">🎒 Gear</button>
-        <button class="px-btn" onclick="showScreen('custom')">✏ Add Questions</button>
-      </div>
-    </div>
-
-    <!-- SCREEN: BATTLE -->
-    <div id="battle" class="screen">
-      <div class="battle-scene">
-        <div class="sprite" id="player-sprite">
-          🧙
-          <div class="sprite-name" id="player-name">SCHOLAR</div>
-        </div>
-        <div class="enemy-col">
-          <div class="sprite" id="enemy-sprite">👾</div>
-          <div class="sprite-name" id="enemy-name">MONSTER</div>
-          <div class="enemy-hp-bar">
-            <div class="enemy-hp-inner" id="enemy-hp"></div>
+          <div class="bar-label">XP</div>
+          <div class="bar-outer">
+            <div class="bar-inner" id="xp-bar" style="width: 0%"></div>
           </div>
         </div>
       </div>
-      <div class="battle-log" id="battle-log">A wild monster appears!</div>
-      <div class="question-box">
-        <div class="q-meta">
-          <div class="q-cat" id="q-cat">MATH</div>
-          <div class="q-diff" id="q-diff">⭐ Easy</div>
+
+      <!-- SCREEN: WORLD MAP -->
+      <div id="world" class="screen active">
+        <div class="world-title" data-t="questMap">⚔ QUEST MAP</div>
+        <div class="world-subtitle" data-t="questSubtitle">
+          choose your zone — answer to fight
         </div>
-        <div class="q-text" id="q-text">Loading question...</div>
-        <div class="q-type-toggle">
-          <button class="toggle-btn active" id="btn-mc" onclick="setQType('mc')">Multiple choice</button>
-          <button class="toggle-btn" id="btn-type" onclick="setQType('type')">Type answer</button>
+        <div class="zone-grid">
+          <div class="zone" onclick="startBattle('math')">
+            <div class="zone-badge" data-t="badgeFree">FREE</div>
+            <div class="zone-icon">🔢</div>
+            <div class="zone-name" data-t="zoneMath">Math Realm</div>
+            <div class="zone-diff" data-t="diffEasyHard">Easy → Hard</div>
+          </div>
+          <div class="zone" onclick="startBattle('english')">
+            <div class="zone-badge" data-t="badgeFree">FREE</div>
+            <div class="zone-icon">📖</div>
+            <div class="zone-name" data-t="zoneEnglish">Word Dungeon</div>
+            <div class="zone-diff" data-t="diffEasyHard">Easy → Hard</div>
+          </div>
+          <div class="zone" onclick="startBattle('science')">
+            <div class="zone-badge">LV3+</div>
+            <div class="zone-icon">🔬</div>
+            <div class="zone-name" data-t="zoneScience">Science Lab</div>
+            <div class="zone-diff" data-t="diffMedBoss">Medium → Boss</div>
+          </div>
+          <div class="zone" onclick="startBattle('custom')">
+            <div class="zone-badge" data-t="badgeCustom">CUSTOM</div>
+            <div class="zone-icon">✏️</div>
+            <div class="zone-name" data-t="zoneCustom">My Questions</div>
+            <div class="zone-diff" data-t="diffYour">Your difficulty</div>
+          </div>
         </div>
-        <div class="choices" id="choices-wrap"></div>
-        <div class="type-input-wrap" id="type-wrap" style="display:none">
-          <input class="type-input" id="type-ans" placeholder="Your answer..."
-            onkeydown="if(event.key==='Enter') submitTyped()" />
-          <button class="px-btn success" onclick="submitTyped()">GO</button>
+        <div class="world-footer">
+          <button class="px-btn gold" onclick="showScreen('inventory')">
+            <span data-t="btnGear">🎒 Gear</span>
+          </button>
+          <button class="px-btn" onclick="showScreen('custom')">
+            <span data-t="btnAddQ">✏ Add Questions</span>
+          </button>
         </div>
       </div>
-      <div class="battle-footer">
-        <button class="px-btn danger" onclick="showScreen('world')">✖ Flee</button>
-        <div id="combo-display"></div>
-        <button class="px-btn" onclick="nextQuestion()">SKIP ▶</button>
+
+      <!-- SCREEN: BATTLE -->
+      <div id="battle" class="screen">
+        <div class="battle-scene">
+          <div class="sprite" id="player-sprite">
+            🧙
+            <div class="sprite-name" id="player-name" data-t="pName">
+              SCHOLAR
+            </div>
+          </div>
+          <div class="enemy-col">
+            <div class="sprite" id="enemy-sprite">👾</div>
+            <div class="sprite-name" id="enemy-name">MONSTER</div>
+            <div class="enemy-hp-bar">
+              <div class="enemy-hp-inner" id="enemy-hp"></div>
+            </div>
+          </div>
+        </div>
+        <div class="battle-log" id="battle-log" data-t="logStart">
+          A wild monster appears!
+        </div>
+        <div class="question-box">
+          <div class="q-meta">
+            <div class="q-cat" id="q-cat">MATH</div>
+            <div class="q-diff" id="q-diff">⭐ Easy</div>
+          </div>
+          <div class="q-text" id="q-text">Loading question...</div>
+          <div class="q-type-toggle">
+            <button
+              class="toggle-btn active"
+              id="btn-mc"
+              onclick="setQType('mc')"
+              data-t="modeMc"
+            >
+              Multiple choice
+            </button>
+            <button
+              class="toggle-btn"
+              id="btn-type"
+              onclick="setQType('type')"
+              data-t="modeType"
+            >
+              Type answer
+            </button>
+          </div>
+          <div class="choices" id="choices-wrap"></div>
+          <div class="type-input-wrap" id="type-wrap" style="display: none">
+            <input class="type-input" id="type-ans" placeholder="..." />
+            <button class="px-btn success" onclick="submitTyped()">GO</button>
+          </div>
+        </div>
+        <div class="battle-footer">
+          <button class="px-btn danger" onclick="showScreen('world')">
+            <span data-t="btnFlee">✖ Flee</span>
+          </button>
+          <div id="combo-display"></div>
+          <button class="px-btn" onclick="nextQuestion()">
+            <span data-t="btnSkip">SKIP ▶</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN: INVENTORY -->
+      <div id="inventory" class="screen">
+        <div class="inv-title" data-t="invTitle">🎒 EQUIPMENT</div>
+        <div class="equipment-grid" id="equip-grid"></div>
+        <div class="inv-stats" id="inv-stats"></div>
+        <div class="inv-footer">
+          <button class="px-btn gold" onclick="showScreen('world')">
+            <span data-t="btnBack">◀ Back to Map</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN: CUSTOM QUESTIONS -->
+      <div id="custom" class="screen">
+        <div class="cq-title" data-t="cqTitle">✏ CUSTOM QUESTIONS</div>
+        <div class="cq-form">
+          <div class="cq-row">
+            <label class="cq-label" data-t="cqLbelQ">Question</label>
+            <input class="cq-input" id="cq-q" placeholder="" />
+          </div>
+          <div class="cq-row">
+            <label class="cq-label" data-t="cqLbelA">Answer</label>
+            <input class="cq-input" id="cq-a" placeholder="" />
+          </div>
+          <div class="cq-row">
+            <label class="cq-label" data-t="cqLbelW1">Wrong 1</label>
+            <input class="cq-input" id="cq-w1" placeholder="" />
+          </div>
+          <div class="cq-row">
+            <label class="cq-label" data-t="cqLbelW2">Wrong 2</label>
+            <input class="cq-input" id="cq-w2" placeholder="" />
+          </div>
+          <div class="cq-row">
+            <label class="cq-label" data-t="cqLbelD">Difficulty</label>
+            <select class="cq-select" id="cq-d">
+              <option value="easy" data-t="optEasy">Easy (1 dmg)</option>
+              <option value="medium" selected data-t="optMed">
+                Medium (2 dmg)
+              </option>
+              <option value="hard" data-t="optHard">Hard (4 dmg)</option>
+            </select>
+          </div>
+          <button class="px-btn success" onclick="addCustomQ()">
+            <span data-t="btnAddQShort">+ Add</span>
+          </button>
+        </div>
+        <div class="cq-list" id="cq-list"></div>
+        <div class="inv-footer">
+          <button class="px-btn gold" onclick="showScreen('world')">
+            <span data-t="btnBack">◀ Back to Map</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN: LEVEL UP -->
+      <div id="levelup" class="screen levelup-screen">
+        <div class="lu-star">⭐</div>
+        <div class="lu-title" data-t="luTitle">LEVEL UP!</div>
+        <div class="lu-msg" id="lu-msg">You reached level 2!</div>
+        <div class="lu-stats">
+          <div class="lu-stat">
+            <div class="lu-stat-label">MAX HP</div>
+            <div class="lu-stat-val" id="lu-hp">+20</div>
+          </div>
+          <div class="lu-stat">
+            <div class="lu-stat-label" data-t="luAtk">ATK PWR</div>
+            <div class="lu-stat-val" id="lu-atk">+5</div>
+          </div>
+        </div>
+        <button class="px-btn gold" onclick="showScreen('world')">
+          <span data-t="btnCont">▶ Continue</span>
+        </button>
+      </div>
+
+      <!-- BOTTOM NAV -->
+      <div class="nav-bar" id="nav-bar">
+        <button
+          class="nav-btn active"
+          id="nav-world"
+          onclick="showScreen('world')"
+        >
+          <div class="nav-icon">🗺</div>
+          <div class="nav-label" data-t="navMap">MAP</div>
+        </button>
+        <button class="nav-btn" id="nav-battle" onclick="startBattle('math')">
+          <div class="nav-icon">⚔</div>
+          <div class="nav-label" data-t="navFight">FIGHT</div>
+        </button>
+        <button
+          class="nav-btn"
+          id="nav-inventory"
+          onclick="showScreen('inventory')"
+        >
+          <div class="nav-icon">🎒</div>
+          <div class="nav-label" data-t="navGear">GEAR</div>
+        </button>
+        <button class="nav-btn" id="nav-custom" onclick="showScreen('custom')">
+          <div class="nav-icon">✏</div>
+          <div class="nav-label" data-t="navQuiz">QUIZ</div>
+        </button>
       </div>
     </div>
-
-    <!-- SCREEN: INVENTORY -->
-    <div id="inventory" class="screen">
-      <div class="inv-title">🎒 EQUIPMENT</div>
-      <div class="equipment-grid" id="equip-grid"></div>
-      <div class="inv-stats" id="inv-stats"></div>
-      <div class="inv-footer">
-        <button class="px-btn gold" onclick="showScreen('world')">◀ Back to Map</button>
-      </div>
+    <!-- Chèn cụm này vào trong #topbar -->
+    <div class="lang-selector">
+      <button class="lang-btn active" onclick="changeLanguage('vi')">VN</button>
+      <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
     </div>
-
-    <!-- SCREEN: CUSTOM QUESTIONS -->
-    <div id="custom" class="screen">
-      <div class="cq-title">✏ CUSTOM QUESTIONS</div>
-      <div class="cq-form">
-        <div class="cq-row">
-          <label class="cq-label">Question</label>
-          <input class="cq-input" id="cq-q" placeholder="e.g. What is 2+2?" />
-        </div>
-        <div class="cq-row">
-          <label class="cq-label">Answer</label>
-          <input class="cq-input" id="cq-a" placeholder="Correct answer" />
-        </div>
-        <div class="cq-row">
-          <label class="cq-label">Wrong 1</label>
-          <input class="cq-input" id="cq-w1" placeholder="Wrong answer" />
-        </div>
-        <div class="cq-row">
-          <label class="cq-label">Wrong 2</label>
-          <input class="cq-input" id="cq-w2" placeholder="Wrong answer" />
-        </div>
-        <div class="cq-row">
-          <label class="cq-label">Difficulty</label>
-          <select class="cq-select" id="cq-d">
-            <option value="easy">Easy (1 dmg)</option>
-            <option value="medium" selected>Medium (2 dmg)</option>
-            <option value="hard">Hard (4 dmg)</option>
-          </select>
-        </div>
-        <button class="px-btn success" onclick="addCustomQ()">+ Add Question</button>
-      </div>
-      <div class="cq-list" id="cq-list"></div>
-      <div class="inv-footer">
-        <button class="px-btn gold" onclick="showScreen('world')">◀ Back to Map</button>
-      </div>
-    </div>
-
-    <!-- SCREEN: LEVEL UP -->
-    <div id="levelup" class="screen levelup-screen">
-      <div class="lu-star">⭐</div>
-      <div class="lu-title">LEVEL UP!</div>
-      <div class="lu-msg" id="lu-msg">You reached level 2!</div>
-      <div class="lu-stats">
-        <div class="lu-stat">
-          <div class="lu-stat-label">MAX HP</div>
-          <div class="lu-stat-val" id="lu-hp">+20</div>
-        </div>
-        <div class="lu-stat">
-          <div class="lu-stat-label">ATK PWR</div>
-          <div class="lu-stat-val" id="lu-atk">+5</div>
-        </div>
-      </div>
-      <button class="px-btn gold" onclick="showScreen('world')">▶ Continue</button>
-    </div>
-
-    <!-- BOTTOM NAV -->
-    <div class="nav-bar" id="nav-bar">
-      <button class="nav-btn active" id="nav-world" onclick="showScreen('world')">
-        <div class="nav-icon">🗺</div>
-        <div class="nav-label">MAP</div>
-      </button>
-      <button class="nav-btn" id="nav-battle" onclick="startBattle('math')">
-        <div class="nav-icon">⚔</div>
-        <div class="nav-label">FIGHT</div>
-      </button>
-      <button class="nav-btn" id="nav-inventory" onclick="showScreen('inventory')">
-        <div class="nav-icon">🎒</div>
-        <div class="nav-label">GEAR</div>
-      </button>
-      <button class="nav-btn" id="nav-custom" onclick="showScreen('custom')">
-        <div class="nav-icon">✏</div>
-        <div class="nav-label">QUIZ</div>
-      </button>
-    </div>
-
-  </div><!-- /#game -->
-
-  <script src="game.js"></script>
-</body>
+    <script src="game.js"></script>
+  </body>
 </html>

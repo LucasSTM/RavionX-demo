@@ -1,20 +1,20 @@
 /* ============================================================
    PIXEL RPG LEARNING GAME — style.css
-   Font: "Press Start 2P" (loaded via Google Fonts in index.html)
+   Font: "Courier New" (loaded via Google Fonts in index.html)
    ============================================================ */
 
 /* ── CSS Custom Properties ── */
 :root {
-  --c1:         #1a1a2e;   /* darkest bg */
-  --c2:         #16213e;   /* panel bg   */
-  --c3:         #0f3460;   /* accent bg  */
-  --gold:       #e2b96f;
-  --green:      #4caf7d;
-  --red:        #e05252;
-  --blue:       #5b8dd9;
-  --purple:     #9b59b6;
-  --white:      #f0e6d3;
-  --btn-bg:     #2d2d5e;
+  --c1: #1a1a2e; /* darkest bg */
+  --c2: #16213e; /* panel bg   */
+  --c3: #0f3460; /* accent bg  */
+  --gold: #e2b96f;
+  --green: #4caf7d;
+  --red: #e05252;
+  --blue: #5b8dd9;
+  --purple: #9b59b6;
+  --white: #f0e6d3;
+  --btn-bg: #2d2d5e;
   --btn-border: #5b5bbb;
 }
 
@@ -41,8 +41,8 @@ body {
    GAME CONTAINER
    ============================================================ */
 #game {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
   color: var(--white);
   background: var(--c1);
   border: 3px solid var(--gold);
@@ -96,7 +96,7 @@ body {
 }
 
 .bar-label {
-  font-size: 6px;
+  font-size: 10px;
   color: var(--gold);
 }
 
@@ -114,16 +114,22 @@ body {
   transition: width 0.4s ease;
 }
 
-#hp-bar  { background: var(--red); }
-#xp-bar  { background: var(--blue); }
-#mp-bar  { background: var(--purple); }
+#hp-bar {
+  background: var(--red);
+}
+#xp-bar {
+  background: var(--blue);
+}
+#mp-bar {
+  background: var(--purple);
+}
 
 .level-badge {
   background: var(--gold);
   color: var(--c1);
-  padding: 4px 7px;
+  padding: 2px 8px;
   border-radius: 2px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -139,13 +145,14 @@ body {
   text-align: center;
   padding: 14px 8px 6px;
   color: var(--gold);
-  font-size: 10px;
+  font-size: 16px; /* Tăng từ 10px lên 16px */
+  font-weight: bold;
   letter-spacing: 2px;
 }
 
 .world-subtitle {
   text-align: center;
-  font-size: 6px;
+  font-size: 10px;
   color: #8888bb;
   padding-bottom: 10px;
 }
@@ -187,13 +194,14 @@ body {
 }
 
 .zone-name {
-  font-size: 7px;
+  font-size: 12px; /* Tăng từ 7px lên 12px */
+  font-weight: bold;
   color: var(--gold);
   text-align: center;
 }
 
 .zone-diff {
-  font-size: 5px;
+  font-size: 10px; /* Tăng từ 5px lên 10px */
   color: #8888bb;
 }
 
@@ -201,10 +209,10 @@ body {
   position: absolute;
   top: 4px;
   right: 6px;
-  font-size: 5px;
+  font-size: 9px; /* Tăng từ 5px lên 9px */
   background: var(--green);
   color: #000;
-  padding: 2px 4px;
+  padding: 3px 5px;
   border-radius: 2px;
 }
 
@@ -249,11 +257,22 @@ body {
 }
 
 @keyframes shake {
-  0%,  100% { transform: translateX(0); }
-  20%        { transform: translateX(-6px); }
-  40%        { transform: translateX(6px); }
-  60%        { transform: translateX(-4px); }
-  80%        { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .sprite-name {
@@ -286,9 +305,10 @@ body {
   border: 1px solid #2a2a4a;
   margin: 0 14px;
   padding: 6px 10px;
-  font-size: 6px;
+  font-size: 12px;
   color: #aabbff;
-  min-height: 22px;
+  min-height: 30px;
+  line-height: 1.5;
   border-radius: 2px;
   text-align: center;
 }
@@ -318,7 +338,7 @@ body {
 }
 
 .q-text {
-  font-size: 8px;
+  font-size: 16px;
   color: var(--white);
   line-height: 1.7;
   text-align: center;
@@ -339,11 +359,13 @@ body {
   border: 1px solid #444;
   color: #888;
   padding: 3px 8px;
-  font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
   cursor: pointer;
   border-radius: 2px;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .toggle-btn.active {
@@ -363,9 +385,10 @@ body {
   background: var(--btn-bg);
   border: 1px solid var(--btn-border);
   color: var(--white);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 7px;
-  padding: 8px 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 5px;
   cursor: pointer;
   border-radius: 3px;
   text-align: center;
@@ -400,8 +423,8 @@ body {
   background: #111;
   border: 1px solid #444;
   color: var(--white);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
   padding: 7px;
   border-radius: 2px;
   outline: none;
@@ -431,9 +454,11 @@ body {
   background: var(--btn-bg);
   border: 1px solid var(--btn-border);
   color: var(--white);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 7px;
-  padding: 6px 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  width: 100%; /* Cho nút dài hết cỡ nhìn cho khỏe khoắn */
+  font-weight: bold;
+  padding: 8px 15px;
   cursor: pointer;
   border-radius: 3px;
   white-space: nowrap;
@@ -465,12 +490,13 @@ body {
 }
 
 .inv-title {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px; /* Tăng từ 10px lên 16px */
+  font-weight: bold;
   text-align: center;
-  padding: 14px 8px 6px;
+  padding: 15px 8px;
   color: var(--gold);
-  font-size: 10px;
 }
-
 .equipment-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -478,19 +504,19 @@ body {
   padding: 10px 12px;
 }
 
+/* Các ô chứa trang bị */
 .equip-slot {
   background: var(--c2);
   border: 2px solid #333;
   border-radius: 4px;
-  padding: 10px 6px;
+  padding: 12px 8px; /* Tăng padding cho ô to ra */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 8px; /* Tăng khoảng cách giữa icon và chữ */
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: all 0.2s;
 }
-
 .equip-slot.equipped {
   border-color: var(--gold);
 }
@@ -505,23 +531,29 @@ body {
 }
 
 .slot-icon {
-  font-size: 22px;
+  font-size: 30px;
 }
 
+/* Tên trang bị (Wooden Staff, Spell Primer...) */
 .slot-name {
-  font-size: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px; /* Tăng từ 5px lên 11px */
+  font-weight: bold;
   color: var(--gold);
   text-align: center;
 }
 
 .slot-stat {
-  font-size: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
   color: #8888bb;
   text-align: center;
+  margin-top: 2px;
 }
 
 .slot-req {
-  font-size: 4px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 10px;
   color: var(--red);
   text-align: center;
 }
@@ -531,20 +563,24 @@ body {
   border: 1px solid #333;
   margin: 0 12px 10px;
   border-radius: 4px;
-  padding: 10px;
+  padding: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
+  gap: 10px 25px;
 }
 
 .inv-stat {
-  font-size: 6px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
   display: flex;
   justify-content: space-between;
+  font-weight: bold;
+  align-items: center;
 }
 
 .inv-stat span:last-child {
   color: var(--gold);
+  font-size: 14px;
 }
 
 .inv-footer {
@@ -564,7 +600,7 @@ body {
   text-align: center;
   padding: 14px 8px 6px;
   color: var(--gold);
-  font-size: 9px;
+  font-size: 15px;
 }
 
 .cq-form {
@@ -585,10 +621,12 @@ body {
 }
 
 .cq-label {
-  font-size: 5px;
+  font-size: 11px;
+  font-family: "Courier New", Courier, monospace;
   color: var(--gold);
+  font-weight: bold;
   white-space: nowrap;
-  min-width: 50px;
+  min-width: 80px;
 }
 
 .cq-input,
@@ -597,9 +635,9 @@ body {
   background: #111;
   border: 1px solid #444;
   color: var(--white);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
-  padding: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  padding: 8px;
   border-radius: 2px;
   outline: none;
 }
@@ -618,34 +656,73 @@ body {
   gap: 4px;
 }
 
-.cq-item {
+#game .cq-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start; /* Sắp xếp từ trái sang */
+  gap: 12px;
+  padding: 8px 12px;
   background: var(--c2);
   border: 1px solid #333;
-  border-radius: 3px;
-  padding: 7px 9px;
-  font-size: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 6px;
+  margin-bottom: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* Không cho nội dung tràn ra ngoài */
 }
 
-.cq-item-text {
+/* Phần chữ của câu hỏi */
+#game .cq-item-text {
+  flex: 1; /* Quan trọng: Nó sẽ lấy toàn bộ chỗ trống trừ phần của nút và badge */
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
   color: #aab;
-  line-height: 1.6;
-  flex: 1;
+  white-space: nowrap; /* Ép không xuống hàng */
+  overflow: hidden; /* Nếu dài quá thì ẩn đi */
+  text-overflow: ellipsis; /* Hiện dấu ... nếu dài quá */
+}
+/* Định dạng cho nút xóa (dấu X) */
+#game .cq-item button {
+  flex-shrink: 0; /* Tuyệt đối không cho giãn */
+  width: 24px; /* Chiều rộng cố định */
+  height: 24px; /* Chiều cao cố định bằng chiều rộng để tạo hình vuông */
+  min-width: 24px; /* Chặn thêm một lần nữa cho chắc */
+  padding: 0; /* Xóa hết đệm bên trong */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4a1a1a;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+}
+/* 4. Thêm hiệu ứng hover mà không cần important */
+#game .cq-item button:hover {
+  background: var(--red);
+  color: white;
+}
+/* Các nhãn Easy, Medium, Hard */
+#game .cq-badge {
+  flex-shrink: 0; /* Không cho phép bị bóp méo */
+  font-size: 10px;
+  padding: 2px 6px;
 }
 
-.cq-badge {
-  padding: 2px 5px;
-  border-radius: 2px;
-  font-size: 4px;
-  white-space: nowrap;
+.badge-easy {
+  background: #1a3a1a;
+  color: var(--green);
 }
-
-.badge-easy   { background: #1a3a1a; color: var(--green); }
-.badge-medium { background: #3a2a0a; color: var(--gold); }
-.badge-hard   { background: #3a1a1a; color: var(--red); }
+.badge-medium {
+  background: #3a2a0a;
+  color: var(--gold);
+}
+.badge-hard {
+  background: #3a1a1a;
+  color: var(--red);
+}
 
 /* ============================================================
    LEVEL UP SCREEN
@@ -654,52 +731,60 @@ body {
   background: #0a0a18;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 20px;
   text-align: center;
+  padding: 20px;
 }
 
 .lu-star {
-  font-size: 48px;
+  font-size: 60px;
   animation: pulse 1s infinite alternate;
 }
 
 @keyframes pulse {
-  from { transform: scale(1); }
-  to   { transform: scale(1.12); }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.12);
+  }
 }
 
 .lu-title {
   color: var(--gold);
-  font-size: 12px;
+  font-size: 20px;
   letter-spacing: 3px;
+  font-weight: bold;
 }
 
 .lu-msg {
-  font-size: 7px;
+  font-size: 14px;
   color: #aabbff;
-  line-height: 2;
+  line-height: 1.6;
 }
 
 .lu-stats {
   display: flex;
-  gap: 20px;
+  gap: 10px 0;
 }
 
 .lu-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .lu-stat-label {
-  font-size: 5px;
+  font-size: 11px;
   color: #8888bb;
+  font-weight: bold;
 }
 
 .lu-stat-val {
-  font-size: 10px;
+  font-size: 16px;
   color: var(--green);
+  font-weight: bold;
 }
 
 /* ============================================================
@@ -724,7 +809,7 @@ body {
   background: none;
   border: none;
   color: var(--white);
-  font-family: 'Press Start 2P', monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .nav-btn.active,
@@ -733,12 +818,13 @@ body {
 }
 
 .nav-icon {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .nav-label {
-  font-size: 5px;
-  color: var(--gold);
+  font-size: 10px; /* Tăng từ 5px lên 10px */
+  font-weight: bold;
+  margin-top: 2px;
 }
 
 /* ============================================================
@@ -749,8 +835,13 @@ body {
 }
 
 @keyframes flash {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 /* Scrollbar styling for the custom list */
@@ -765,4 +856,25 @@ body {
 .cq-list::-webkit-scrollbar-thumb {
   background: var(--btn-border);
   border-radius: 2px;
+}
+
+.lang-selector {
+  display: flex;
+  gap: 3px;
+}
+.lang-btn {
+  background: #111;
+  border: 1px solid #444;
+  color: #666;
+  font-family: "Courier New", Courier, monospace; /* Đổi font */
+  font-size: 10px; /* Tăng lên 10px */
+  font-weight: bold;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.lang-btn.active {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
 }

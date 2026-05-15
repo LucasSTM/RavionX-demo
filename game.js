@@ -17,14 +17,74 @@
  *   dmg:     number   — base damage dealt on correct answer (1 / 2 / 4)
  * }
  */
+let currentLang = 'en'; // Mặc định tiếng Việt
+
+const LANG_DB = {
+  vi: {
+    questMap: "⚔️ BẢN ĐỒ NHIỆM VỤ",
+    questSubtitle: "chọn vùng đất — trả lời để chiến đấu",
+    btnGear: "🎒 Trang bị",
+    btnAddQ: "✏️ Thêm câu hỏi",
+    pName: "HỌC GIẢ",
+    logStart: "Một quái vật xuất hiện!",
+    btnFlee: "✖ Bỏ chạy",
+    btnSkip: "BỎ QUA ▶",
+    invTitle: "🎒 HÀNH TRANG TRANG BỊ",
+    btnBack: "◀ Trở về bản đồ",
+    logCorrect: "✓ Chính xác! Gây {dmg} sát thương! +{xp} XP",
+    logWrong: "✗ Sai rồi! Bạn bị quái cắn mất {dmg} máu! Đáp án: {ans}",
+    logDefeatE: "⚡ Đã tiêu diệt {name}! Nhận {bonus} XP thưởng!",
+    logDefeatP: "💀 Bạn đã gục ngã! Hồi sinh với 30% HP."
+  },
+  en: {
+    questMap: "⚔️ QUEST MAP",
+    questSubtitle: "choose your zone — answer to fight",
+    btnGear: "🎒 Gear",
+    btnAddQ: "✏️ Add Questions",
+    pName: "SCHOLAR",
+    logStart: "A wild monster appears!",
+    btnFlee: "✖ Flee",
+    btnSkip: "SKIP ▶",
+    invTitle: "🎒 EQUIPMENT",
+    btnBack: "◀ Back to Map",
+    logCorrect: "✓ Correct! Dealt {dmg} damage! +{xp} XP",
+    logWrong: "✗ Wrong! Enemy strikes for {dmg} damage! Answer: {ans}",
+    logDefeatE: "⚡ {name} defeated! +{bonus} bonus XP!",
+    logDefeatP: "💀 You fell! Recovered with 30% HP."
+  }
+}
+function changeLanguage(lang) {
+  currentLang = lang;
+  
+  // Quét toàn bộ HTML có attribute data-t để thay chữ tương ứng
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (LANG_DB[lang][key]) {
+      el.textContent = LANG_DB[lang][key];
+    }
+  });
+
+  // Đổi trạng thái hiển thị sáng/tối của 2 nút bấm VN/EN
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(lang));
+  });
+}
+
 const QUESTIONS = {
   math: [
-    { id: 'm1', text: 'What is 7 × 8?',                        answer: '56',       choices: ['56','54','64','48'],                           diff: 'easy',   dmg: 1 },
-    { id: 'm2', text: 'What is √144?',                          answer: '12',       choices: ['12','11','14','16'],                           diff: 'easy',   dmg: 1 },
-    { id: 'm3', text: 'Solve: 3x + 6 = 21',                    answer: '5',        choices: ['5','3','7','4'],                               diff: 'medium', dmg: 2 },
-    { id: 'm4', text: 'What is 15% of 200?',                    answer: '30',       choices: ['30','25','35','20'],                           diff: 'medium', dmg: 2 },
-    { id: 'm5', text: 'Simplify: (x² + 2x + 1)',               answer: '(x+1)²',   choices: ['(x+1)²','(x+2)²','(x-1)²','x²+1'],           diff: 'hard',   dmg: 4 },
-    { id: 'm6', text: 'What is the derivative of x³?',          answer: '3x²',      choices: ['3x²','x²','3x','2x³'],                        diff: 'hard',   dmg: 4 },
+    { id: 'm1', text: '7 × 8 bằng bao nhiêu?',                    answer: '56',       choices: ['56','54','64','48'],                           diff: 'easy',   dmg: 1 },
+    { id: 'm2', text: '√144 bằng bao nhiêu?',                     answer: '12',       choices: ['12','11','14','16'],                           diff: 'easy',   dmg: 1 },
+    { id: 'm3', text: 'Giải phương trình: 3x + 6 = 21',           answer: '5',        choices: ['5','3','7','4'],                               diff: 'medium', dmg: 2 },
+    { id: 'm4', text: '15% của 200 bằng bao nhiêu?',              answer: '30',       choices: ['30','25','35','20'],                           diff: 'medium', dmg: 2 },
+    { id: 'm5', text: 'Rút gọn biểu thức: (x² + 2x + 1)',          answer: '(x+1)²',   choices: ['(x+1)³','(x+2)²','(x-1)²','x²+1'],           diff: 'hard',   dmg: 4 }, // Đã sửa lựa chọn đầu thành (x+1)² cho giống đáp án
+    { id: 'm6', text: 'Đạo hàm của x³ là gì?',                    answer: '3x²',      choices: ['3x²','x²','3x','2x³'],                        diff: 'hard',   dmg: 4 },
+  ],
+  science: [
+    { id: 's1', text: 'Thực vật hấp thụ chất khí nào trong quá trình quang hợp?', answer: 'CO₂',          choices: ['CO₂','O₂','N₂','H₂'],                                     diff: 'medium', dmg: 2 },
+    { id: 's2', text: 'Số hiệu nguyên tử của Cacbon là bao nhiêu?',             answer: '6',            choices: ['6','12','8','14'],                                         diff: 'medium', dmg: 2 },
+    { id: 's3', text: "Định luật II Newton: F = ?",                          answer: 'ma',           choices: ['ma','mv','m/a','a/m'],                                     diff: 'medium', dmg: 2 },
+    { id: 's4', text: 'Tốc độ ánh sáng (xấp xỉ) bằng bao nhiêu?',             answer: '3×10⁸ m/s',   choices: ['3×10⁸ m/s','3×10⁶ m/s','3×10⁴ m/s','1×10⁸ m/s'],       diff: 'hard',   dmg: 4 },
+    { id: 's5', text: 'Bào quan nào đảm nhận nhiệm vụ sản sinh ATP?',             answer: 'Mitochondria', choices: ['Mitochondria','Nucleus','Ribosome','Vacuole'],              diff: 'hard',   dmg: 4 },
   ],
   english: [
     { id: 'e1', text: 'Which word is a synonym for "happy"?',                              answer: 'Joyful',          choices: ['Joyful','Sad','Angry','Tired'],                                           diff: 'easy',   dmg: 1 },
@@ -32,13 +92,6 @@ const QUESTIONS = {
     { id: 'e3', text: 'What literary device is "the wind whispered"?',                     answer: 'Personification', choices: ['Personification','Simile','Metaphor','Alliteration'],                     diff: 'medium', dmg: 2 },
     { id: 'e4', text: 'Choose the correct: "Neither he nor she ___ wrong."',               answer: 'is',              choices: ['is','are','were','been'],                                                 diff: 'medium', dmg: 2 },
     { id: 'e5', text: 'What is the mood of subjunctive in "If I were king"?',              answer: 'Hypothetical',    choices: ['Hypothetical','Indicative','Imperative','Interrogative'],                 diff: 'hard',   dmg: 4 },
-  ],
-  science: [
-    { id: 's1', text: 'What gas do plants absorb during photosynthesis?', answer: 'CO₂',          choices: ['CO₂','O₂','N₂','H₂'],                                     diff: 'medium', dmg: 2 },
-    { id: 's2', text: 'What is the atomic number of Carbon?',             answer: '6',            choices: ['6','12','8','14'],                                         diff: 'medium', dmg: 2 },
-    { id: 's3', text: "Newton's 2nd Law: F = ?",                          answer: 'ma',           choices: ['ma','mv','m/a','a/m'],                                     diff: 'medium', dmg: 2 },
-    { id: 's4', text: 'What is the speed of light (approx)?',             answer: '3×10⁸ m/s',   choices: ['3×10⁸ m/s','3×10⁶ m/s','3×10⁴ m/s','1×10⁸ m/s'],       diff: 'hard',   dmg: 4 },
-    { id: 's5', text: 'Which organelle produces ATP?',                     answer: 'Mitochondria', choices: ['Mitochondria','Nucleus','Ribosome','Vacuole'],              diff: 'hard',   dmg: 4 },
   ],
   custom: [],
 };
@@ -247,7 +300,7 @@ function submitAnswer(chosen, correct) {
     else if (btn.textContent.trim() === chosen)      btn.classList.add('wrong');
   });
 
-  if (isCorrect) {
+if (isCorrect) {
     P.combo++;
     const dmg = calcDamage(currentQ);
     const xp  = calcXP(currentQ);
@@ -262,7 +315,12 @@ function submitAnswer(chosen, correct) {
 
     P.xp    += xp;
     P.score += xp;
-    setBattleLog(`✓ Correct! Dealt ${dmg} damage! +${xp} XP` + (P.combo >= 3 ? ` 🔥×${P.combo} COMBO!` : ''));
+    
+    // --- ĐÃ THAY ĐỔI ĐA NGÔN NGỮ Ở ĐÂY ---
+    let logMsg = LANG_DB[currentLang].logCorrect.replace('{dmg}', dmg).replace('{xp}', xp);
+    if (P.combo >= 3) logMsg += ` 🔥×${P.combo} COMBO!`;
+    setBattleLog(logMsg);
+    
     updateBars();
     updateCombo();
     checkLevelUp();
@@ -272,10 +330,13 @@ function submitAnswer(chosen, correct) {
     P.combo = 0;
     updateCombo();
     const dmg = takeDamage();
-    setBattleLog(`✗ Wrong! Enemy strikes for ${dmg} damage! Answer: ${correct}`);
+    
+    // --- ĐÃ THAY ĐỔI ĐA NGÔN NGỮ Ở ĐÂY ---
+    let logMsg = LANG_DB[currentLang].logWrong.replace('{dmg}', dmg).replace('{ans}', correct);
+    setBattleLog(logMsg);
+    
     if (P.hp <= 0) { setTimeout(playerDefeated, 900); return; }
   }
-
   setTimeout(nextQuestion, 1100);
 }
 
@@ -283,7 +344,10 @@ function enemyDefeated() {
   P.kills++;
   const bonus = Math.floor(enemy.maxHp / 5);
   P.xp += bonus;
-  setBattleLog(`⚡ ${enemy.name} defeated! +${bonus} bonus XP!`);
+  
+  // --- ĐÃ THAY ĐỔI ĐA NGÔN NGỮ Ở ĐÂY ---
+  setBattleLog(LANG_DB[currentLang].logDefeatE.replace('{name}', enemy.name).replace('{bonus}', bonus));
+  
   updateBars();
   checkLevelUp();
   setTimeout(() => startBattle(currentCategory), 1200);
@@ -293,7 +357,10 @@ function playerDefeated() {
   P.hp    = Math.floor(P.maxHp * 0.3);
   P.combo = 0;
   updateBars();
-  setBattleLog('💀 You fell! Recovered with 30% HP.');
+  
+  // --- ĐÃ THAY ĐỔI ĐA NGÔN NGỮ Ở ĐÂY ---
+  setBattleLog(LANG_DB[currentLang].logDefeatP);
+  
   setTimeout(() => showScreen('world'), 1500);
 }
 
@@ -475,5 +542,6 @@ function esc(str) {
 /* ============================================================
    10. INIT
    ============================================================ */
+changeLanguage('vi'); // Thêm dòng này để áp dụng tiếng Việt ngay từ đầu cho UI
 updateBars();
 renderCustomList();
