@@ -76,7 +76,7 @@ const QUESTIONS = {
     { id: 'm2', text: '√144 bằng bao nhiêu?',                     answer: '12',       choices: ['12','11','14','16'],                           diff: 'easy',   dmg: 1 },
     { id: 'm3', text: 'Giải phương trình: 3x + 6 = 21',           answer: '5',        choices: ['5','3','7','4'],                               diff: 'medium', dmg: 2 },
     { id: 'm4', text: '15% của 200 bằng bao nhiêu?',              answer: '30',       choices: ['30','25','35','20'],                           diff: 'medium', dmg: 2 },
-    { id: 'm5', text: 'Rút gọn biểu thức: (x² + 2x + 1)',          answer: '(x+1)²',   choices: ['(x+1)³','(x+2)²','(x-1)²','x²+1'],           diff: 'hard',   dmg: 4 }, // Đã sửa lựa chọn đầu thành (x+1)² cho giống đáp án
+    { id: 'm5', text: 'Rút gọn biểu thức: (x² + 2x + 1)',          answer: '(x+1)²',   choices: ['(x+1)³','(x+2)²','(x+1)²','x²+1'],           diff: 'hard',   dmg: 4 }, // Đã sửa lựa chọn đầu thành (x+1)² cho giống đáp án
     { id: 'm6', text: 'Đạo hàm của x³ là gì?',                    answer: '3x²',      choices: ['3x²','x²','3x','2x³'],                        diff: 'hard',   dmg: 4 },
   ],
   science: [
