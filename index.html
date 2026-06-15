@@ -31,17 +31,24 @@
         </div>
 
         <!-- Nút chuyển ngôn ngữ -->
-        <div class="lang-selector">
-          <button class="lang-btn" onclick="changeLanguage('vi')">VN</button>
-          <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
-        </div>
 
-        <div class="level-badge" id="lv-badge">LV 1</div>
-        <div class="bar-wrap">
-          <div class="bar-label">XP</div>
-          <div class="bar-outer">
-            <div class="bar-inner" id="xp-bar" style="width: 0%"></div>
+        <div class="mid-group">
+          <div class="level-badge" id="lv-badge">LV 1</div>
+          <div class="bar-wrap">
+            <div class="bar-label">XP</div>
+            <div class="bar-outer">
+              <div class="bar-inner" id="xp-bar" style="width: 0%"></div>
+            </div>
           </div>
+        </div>
+        <div class="right-group">
+          <div class="lang-selector">
+            <button class="lang-btn" onclick="changeLanguage('vi')">VN</button>
+            <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+          </div>
+          <button class="px-btn login-btn" onclick="showScreen('login')">
+            LOGIN
+          </button>
         </div>
       </div>
 
@@ -83,6 +90,50 @@
           </button>
           <button class="px-btn" onclick="showScreen('custom')">
             <span data-t="btnAddQ">✏ Add Questions</span>
+          </button>
+        </div>
+      </div>
+      <div id="login" class="screen">
+        <div class="cq-title">🔑 LOGIN / SIGNUP</div>
+        <div class="cq-form">
+          <div class="cq-row">
+            <label class="cq-label">Username</label>
+            <input class="cq-input" id="login-user" placeholder="Username..." />
+          </div>
+          <div class="cq-row">
+            <label class="cq-label">Password</label>
+            <input
+              class="cq-input"
+              id="login-pass"
+              type="password"
+              placeholder="Password..."
+            />
+          </div>
+        </div>
+        <button class="px-btn success" onclick="processLogin()">LOGIN</button>
+        <div style="margin-top: 15px; color: #ccc; font-size: 12px">
+          Chưa có tài khoản?
+          <span
+            id="toggle-auth"
+            style="color: #4ade80; cursor: pointer; text-decoration: underline"
+            onclick="toggleAuthMode()"
+          >
+            Đăng ký tại đây
+          </span>
+        </div>
+        <div style="margin-top: 20px">
+          <button
+            class="px-btn"
+            style="
+              background: #ffffff;
+              color: #000000;
+              border: 1px solid #ddd;
+              padding: 10px 15px;
+              font-size: 11px;
+            "
+            onclick="loginWithGoogle()"
+          >
+            G LOGIN WITH GOOGLE
           </button>
         </div>
       </div>
@@ -251,10 +302,8 @@
       </div>
     </div>
     <!-- Chèn cụm này vào trong #topbar -->
-    <div class="lang-selector">
-      <button class="lang-btn active" onclick="changeLanguage('vi')">VN</button>
-      <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
     <script src="game.js"></script>
   </body>
 </html>

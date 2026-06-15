@@ -32,9 +32,9 @@ body {
   background: #0a0a14;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  margin: 0;
   min-height: 100vh;
-  padding: 24px 12px;
 }
 
 /* ============================================================
@@ -45,15 +45,19 @@ body {
   font-size: 15px;
   color: var(--white);
   background: var(--c1);
-  border: 3px solid var(--gold);
-  border-radius: 4px;
+  border: 4px solid var(--gold); /* Tăng độ dày viền vàng */
+  border-radius: 8px; /* Bo góc cho sang trọng */
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 480px;
-  min-height: 580px;
+  width: 90vw; /* Rộng 90% màn hình */
+  max-width: 500px; /* Giới hạn chiều rộng tối đa */
+  height: 90vh; /* Cao 90% màn hình */
   overflow: hidden;
+  position: relative; /* Cần thiết để các phần tử con định vị theo */
   image-rendering: pixelated;
+  width: 100vw; /* Chiếm 95% bề ngang màn hình */
+  max-width: 100%; /* Không quá rộng */
+  height: 100vh;
 }
 
 /* ============================================================
@@ -67,6 +71,7 @@ body {
 
 .screen.active {
   display: flex;
+  flex-direction: column;
 }
 
 /* ============================================================
@@ -75,11 +80,36 @@ body {
 #topbar {
   background: var(--c2);
   border-bottom: 2px solid var(--gold);
-  padding: 8px 12px;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+/* Căn giữa cụm LV và XP */
+.mid-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1; /* Chiếm khoảng trống ở giữa */
+  justify-content: center;
+}
+/* Căn phải cho nút Login và Lang */
+.right-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* Tinh chỉnh nút Login mà không làm ảnh hưởng class px-btn khác */
+#topbar .login-btn {
+  width: auto;
+  font-size: 10px;
+  padding: 4px 8px;
+  background: var(--c3);
+  border: 1px solid var(--gold);
+  color: var(--gold);
 }
 
 .stat-group {
@@ -92,7 +122,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3px;
-  min-width: 90px;
+  width: auto;
 }
 
 .bar-label {
@@ -629,7 +659,35 @@ body {
   min-width: 80px;
 }
 
-.cq-input,
+#login {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* Tạo khoảng cách và đổ bóng để nó nổi lên như một bảng menu */
+  background: #1a1b26;
+  border: 2px solid #4ade80; /* Viền xanh lá giống style game */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  /* Căn giữa */
+  width: 90%;
+  max-width: 400px;
+  margin: 40px auto;
+}
+
+/* Làm cho các ô input trông gọn hơn */
+.cq-input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background: #0f0f14;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 6px;
+}
 .cq-select {
   flex: 1;
   background: #111;
@@ -790,6 +848,12 @@ body {
 /* ============================================================
    BOTTOM NAVIGATION
    ============================================================ */
+#nav-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100; /* Đảm bảo nó luôn nằm trên cùng hoặc dưới cùng tùy ý cậu */
+}
 .nav-bar {
   background: var(--c2);
   border-top: 2px solid var(--gold);

@@ -539,6 +539,88 @@ function esc(str) {
   return String(str).replace(/'/g, "\\'");
 }
 
+// Thay thế hàm showScreen cũ bằng hàm này
+function showScreen(screenId) {
+    // 1. Ẩn tất cả các màn hình (.screen)
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+        screen.style.display = 'none'; // Ép buộc ẩn
+    });
+
+    // 2. Hiện màn hình đích
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.add('active');
+        targetScreen.style.display = 'flex'; // Ép buộc hiện
+    }
+
+    // 3. Cập nhật navigation (giữ nguyên logic của cậu)
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + screenId);
+    if (navEl) navEl.classList.add('active');
+
+    // 4. Ẩn/Hiện thanh Menu (Nav-bar) nếu đang ở Login
+    // Giả sử thanh menu của cậu có ID là 'nav-bar'
+    const navBar = document.getElementById('nav-bar');
+    if (navBar) {
+        navBar.style.display = (screenId === 'login') ? 'none' : 'flex';
+    }
+
+    // 5. Render lại dữ liệu (giữ nguyên logic của cậu)
+    if (screenId === 'inventory') renderInventory();
+    if (screenId === 'custom')    renderCustomList();
+}
+// Khởi tạo biến kết nối chuẩn chỉnh bằng var toàn cục
+var supabase = window.supabase ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_KEY) : null;
+
+// Hàm xử lý Đăng nhập / Đăng ký bằng mật khẩu thông thường
+async function processLogin() {
+    const email = document.getElementById('login-user').value; 
+    const password = document.getElementById('login-pass').value;
+
+    try {
+        if (!supabase) throw new Error("Chưa kết nối được với Supabase SDK");
+        
+        let { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            let { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+            if (signUpError) throw signUpError;
+            alert("Đăng ký thành công! Chào mừng " + email);
+        } else {
+            alert("Đăng nhập thành công! Chào mừng trở lại " + email);
+        }
+    } catch (err) {
+        alert("Lỗi: " + err.message);
+    }
+}
+
+// Hàm Đăng nhập bằng Google OAuth
+async function loginWithGoogle() {
+    try {
+        if (!supabase) {
+            alert("Lỗi: Không tìm thấy kết nối Supabase SDK!");
+            return;
+        }
+        
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: 'https://lucasstm.github.io/RavionX-demo/' // Chuyển hướng về đúng cổng Live Server
+            }
+        });
+        
+        if (error) throw error;
+    } catch (err) {
+        alert("Lỗi kết nối Google: " + err.message);
+    }
+}
 /* ============================================================
    10. INIT
    ============================================================ */
